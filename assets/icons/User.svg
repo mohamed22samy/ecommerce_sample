@@ -1,0 +1,6 @@
+<svg id="User" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <rect id="User_Frame_Background_" data-name="User [Frame Background]" width="24" height="24" fill="none"/>
+  <path id="Vector" d="M0,0H24V24H0Z" fill="none"/>
+  <path id="Vector-2" data-name="Vector" d="M12,6A6,6,0,1,1,6,0,6,6,0,0,1,12,6Z" transform="translate(6 3)" fill="none" stroke="#8a959d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+  <path id="Vector-3" data-name="Vector" d="M0,5.25a10.339,10.339,0,0,1,18,0" transform="translate(3 15)" fill="none" stroke="#8a959d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+</svg>

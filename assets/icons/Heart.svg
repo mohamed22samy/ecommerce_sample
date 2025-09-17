@@ -1,0 +1,5 @@
+<svg id="Heart" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <rect id="Heart_Frame_Background_" data-name="Heart [Frame Background]" width="24" height="24" fill="none"/>
+  <path id="Vector" d="M0,0H24V24H0Z" fill="none"/>
+  <path id="Vector-2" data-name="Vector" d="M9.75,16.5S0,11.25,0,5.063A5.062,5.062,0,0,1,5.063,0,4.938,4.938,0,0,1,9.75,3a4.938,4.938,0,0,1,4.688-3A5.062,5.062,0,0,1,19.5,5.063C19.5,11.25,9.75,16.5,9.75,16.5Z" transform="translate(2.25 4.5)" fill="none" stroke="#8a959d" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+</svg>
