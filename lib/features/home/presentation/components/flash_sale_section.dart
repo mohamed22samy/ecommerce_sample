@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/app_color.dart';
@@ -8,7 +9,7 @@ import '../../../../core/widgets/shimmer_widgets.dart';
 import '../controller/home_state.dart';
 import 'product_card.dart';
 
-class FlashSaleSection extends StatelessWidget {
+class FlashSaleSection extends StatefulWidget {
   final HomeState state;
   final Function(String, String, String, Color, int?) onAddToCart;
 
@@ -17,6 +18,46 @@ class FlashSaleSection extends StatelessWidget {
     required this.state,
     required this.onAddToCart,
   });
+
+  @override
+  State<FlashSaleSection> createState() => _FlashSaleSectionState();
+}
+
+class _FlashSaleSectionState extends State<FlashSaleSection> {
+  late Timer _timer;
+  Duration _timeLeft = const Duration(hours: 1, minutes: 24, seconds: 2);
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_timeLeft.inSeconds > 0) {
+        setState(() {
+          _timeLeft = _timeLeft - const Duration(seconds: 1);
+        });
+      } else {
+        timer.cancel();
+      }
+    });
+  }
+
+  String _formatTime(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String hours = twoDigits(duration.inHours);
+    String minutes = twoDigits(duration.inMinutes.remainder(60));
+    String seconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$hours : $minutes : $seconds";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +90,7 @@ class FlashSaleSection extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16.r),
                   ),
                   child: ManropeText(
-                    text: "1 : 24 : 02",
+                    text: _formatTime(_timeLeft),
                     fontSize: 14,
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
@@ -66,8 +107,8 @@ class FlashSaleSection extends StatelessWidget {
   }
 
   Widget _buildProductsGrid() {
-    if (state.productsStatus == RequestStatus.loaded &&
-        state.products.isNotEmpty) {
+    if (widget.state.productsStatus == RequestStatus.loaded &&
+        widget.state.products.isNotEmpty) {
       return GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -77,9 +118,9 @@ class FlashSaleSection extends StatelessWidget {
           mainAxisSpacing: 8.h,
           childAspectRatio: 0.75,
         ),
-        itemCount: state.products.length,
+        itemCount: widget.state.products.length,
         itemBuilder: (context, index) {
-          final product = state.products[index];
+          final product = widget.state.products[index];
           return ProductCard(
             title: product.title,
             price: "\$${product.price.toStringAsFixed(2)}",
@@ -88,7 +129,7 @@ class FlashSaleSection extends StatelessWidget {
             bgColor: _getProductColor(index),
             imageUrl: product.image,
             productId: product.id,
-            onAddToCart: onAddToCart,
+            onAddToCart: widget.onAddToCart,
           );
         },
       );
@@ -138,7 +179,7 @@ class FlashSaleSection extends StatelessWidget {
       itemBuilder: (context, index) {
         final product = defaultProducts[index];
 
-        if (state.productsStatus == RequestStatus.loading) {
+        if (widget.state.productsStatus == RequestStatus.loading) {
           return _buildProductShimmer();
         }
 
@@ -150,7 +191,7 @@ class FlashSaleSection extends StatelessWidget {
           bgColor: product["color"] as Color,
           imageUrl: AppImage.kflashSaleImage,
           productId: index + 1000,
-          onAddToCart: onAddToCart,
+          onAddToCart: widget.onAddToCart,
         );
       },
     );
